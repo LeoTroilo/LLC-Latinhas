@@ -1,0 +1,9 @@
+bigquery:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: 'llc_latinhas'
+      dataset: 'llc_latinhas'
+      threads: 1
