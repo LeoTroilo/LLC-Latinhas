@@ -7,4 +7,4 @@ select
     ,cast(id_venda as integer) as id_venda
     ,cast(qtd_devolvida as integer) as qtd_devolvida
     ,cast(motivo as string) as motivo
-from {{ref('sc_llc__devolucoes')}}
+from {{ source('llc_latinhas', 'devolucoes') }}

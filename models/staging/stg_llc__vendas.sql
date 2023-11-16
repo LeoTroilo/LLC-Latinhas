@@ -15,5 +15,4 @@ select
     ,cast(qtd_vendida as integer) as qtd_vendida
     ,cast(valor_total as numeric) as valor_total
     ,cast(data_venda as timestamp) as data_venda
-from {{ref('sc_llc__vendas')}}
-order by 1
+from {{ source('llc_latinhas', 'vendas') }}
