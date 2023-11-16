@@ -13,6 +13,7 @@ select
     ,cast(id_produto as integer) as id_produto
     ,cast(id_cliente as integer) as id_cliente
     ,cast(qtd_vendida as integer) as qtd_vendida
-    ,cast(valor_total as float64) as valor_total
+    ,cast(valor_total as numeric) as valor_total
     ,cast(data_venda as timestamp) as data_venda
 from {{ref('sc_llc__vendas')}}
+order by 1
