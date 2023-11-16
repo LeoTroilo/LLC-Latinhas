@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: stg_llc__clientes
+    description: 'Tabela com informações de clientes'
+    columns:
+      - name: id_cliente
+        description: 'Chave primária para os clientes'
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: id_cliente
+              to: source('llc_latinhas', 'clientes')
+      - name: nome_cliente
+        description: 'Nome dos clientes'
+        tests:
+          - not_null
+      - name: uf
+        description: 'Sigla do Estado onde o cliente está localizado'
+      - name: cidade
+        description: 'Cidade onde o cliente está localizado'
+
+  - name: stg_llc__devolucoes
+    description: 'Tabela com as informações de devoluções realiadas por clientes'
+    columns:
+      - name: id_devolucao
+        description: 'Chave primária da devolução realizada'
+        tests:
+          - unique
+          - not_null 
+          - relationships:
+              field: id_devolucao
+              to: source('llc_latinhas', 'devolucoes')
+      - name: id_venda
+        description: 'Chave estrangeira da venda cuja devolução foi solicitada'
+        tests:
+          - not_null
+      - name: qtd_devolvida
+        description: 'Quantidade de produtos devolvidos'
+      - name: motivo
+        description: 'Motivo pelo qual a devolução foi solicitada'
+      
+  - name: stg_llc__feedback_clientes
+    description: 'Tabela com as informações de feedbacks quaitativos realizados pelos clientes'
+    columns:
+      - name: id_feedback
+        description: 'Chave primária do feedback realizado'
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: id_feedback
+              to: source('llc_latinhas', 'stg_llc__feedback_clientes')
+      - name: id_cliente
+        description: 'Chave estrangeira de ideintificação do cliente'
+        tests:
+          - unique
+          - not_null
+      - name: avaliacao
+        description: 'Avaliação quantitativa de 1 a 5'
+        tests:
+          - not_null
+      - name: comentario 
+        description: 'Comentário feito pelo cliente'
+        tests:
+          - not_null
+              
+  - name: stg_llc__produtos
+    description: 'Tabela com as informações de produtos'
+    columns:
+      - name: id_produto
+        description: 'Chave primária de cada produto'
+        tests:
+          - unique
+          - not_null 
+          - relationships:
+              field: id_produto
+              to: source('llc_latinhas', 'stg_llc__produtos')             
+      - name: nome_produto
+        description: 'Nome do produto'
+        tests:
+          - not_null
+          - unique
+      - name: estoque_inicial
+        description: 'Quantidade de unidades daquele produto no estoque'
+      - name: unidades_produzidas
+        description: 'Quantidade de unidades daquele produto produzidas'
+  
+  - name: stg_llc__vendas
+    description: 'Tabelas com as informações de vendas realizadas'
+    columns:
+      - name: id_venda
+        description: 'Chave primária de cada venda realizada'
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              field: id_venda
+              to: source('llc_latinhas', 'stg_llc__vendas')
+      - name: id_produto
+        description: 'Chave estrageria com a informação do produto vendido'
+        tests:
+          - not_null
+      - name: id_cliente
+        description: 'Chave estrangeira com a informação do cliente para quem foi realizado a venda'
+        tests:
+          - not_null
+      - name: qtd_vendida
+        description: 'Quantidade de produtos vendidos'
+      - name: valor_total
+        description: 'Valor em Reais(R$) do total daquela venda'
+      - name: data_venda
+        description: 'Data em que foi realizado a venda'

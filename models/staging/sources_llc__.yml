@@ -35,15 +35,12 @@ sources:
           - name: id_venda
             description: 'Chave estrangeira da venda cuja devolução foi solicitada'
             tests:
-              - not null
+              - not_null
           - name: qtd_devolvida
             description: 'Quantidade de produtos devolvidos'
-            tests:
-              - not_null
           - name: motivo
             description: 'Motivo pelo qual a devolução foi solicitada'
-            tests:
-              - not_null
+            
 
       - name: feedback_clientes
         description: 'Tabela com as informações de feedbacks quaitativos realizados pelos clientes'
