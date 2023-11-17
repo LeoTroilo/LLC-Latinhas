@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: dim_llc__clientes
+    description: 'Tabela de dimensão dos clientes'
+    columns:
+      - name: id_cliente
+        description: 'Chave única de indentificação dos clientes'
+        tests:
+          - relationships:
+              field: id_cliente
+              to: ref('stg_llc__clientes')
+      - name: nome_cliente
+        description: 'Nome dos clientes'
+      - name: estado
+        description: 'Sigla do estado onde os clientes estão localizados'
+      - name: cidade
+        description: 'Nome da Cidade onde os clientes estão localizados'
+      - name: qtd_vendas
+        description: 'Quantidade total de vendas que foram realizadas para aquele cliente'
+      - name: faturamento_total
+        description: 'Soma do valor total de todas as vendas realizadas para aquele cliente'
+      - name: avaliacao
+        description: 'Comentário do ciente sobre o serviço prestado'
+
+      
+  - name: dim_llc__produtos
+    description: 'Tabela de dimensões sobre o produto'
+    columns:
+      - name: id_produto
+        description: 'Chave únida de identificação de um produto'
+        tests:
+          - relationships:
+              field: id_produto
+              to: ref('stg_llc__produtos')
+      - name: nome_produto
+        description: 'Nome do produto'
+      - name: qtd_produtos_estoque
+        description: 'Quantidade de produtos no estoque, resultado da soma de produtos produzidos com produtos no estoque inicial'
+      - name: qtd_vendida_total
+        description: 'Quantidade de itens vendidos por produto'
+      - name: valor_produto
+        description: 'Valor de uma unidade do produto'
+      - name: qtd_produtos_devolvidos
+        description: 'Quantidade de itens devolvidos daquele produto'
+
+  - name: fct_llc__vendas
+    description: 'Tabela fato com as informações de vendas'
+    columns:
+      - name: id_venda
+        description: 'Chave única da venda realizada'
+        tests:
+          - relationships:
+              field: id_venda
+              to: ref('stg_llc__vendas')
+      - name: id_produto
+        description: 'Chave do produto vendido'
+        tests:
+          - relationships:
+              field: id_produto
+              to: ref('dim_llc__produtos')
+      - name: nome_produto
+        description: 'Nome do Produto'
+      - name: valor_unitario
+        description: 'Valor de uma unidade daquele produto'
+      - name: id_cliente
+        description: 'Chave de identificação daquele cliente'
+        tests:
+          - relationships:
+              field: id_cliente
+              to: ref('dim_llc__clientes')
+      - name: nome_cliente
+        description: 'Nome do cliente'
+      - name: qtd_vendida
+        description: 'Quantidades de unidades de produtos vendidos'
+      - name: valor_total
+        description: 'Valor total da venda'
+      - name: data_venda
+        description: 'Data e hora que a venda foi realizada'
+      - name: is_devolucao
+        description: 'Booleano que indica se aquela venda teve alguma devolução'
+      - name: qtd_devolucao
+        description: 'Quantidades de unidades devolvidas'
+      - name: valor_restituido
+        description: 'Valor restituído ao cliente por conta de unidades devolvidas'
